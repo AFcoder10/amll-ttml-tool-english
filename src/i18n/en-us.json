@@ -617,5 +617,10 @@
 			"description": "This will overwrite all content in the current editor. Are you sure you want to restore this snapshot?"
 		},
 		"cancelButton": "Cancel"
+	},
+	"pwa": {
+		"offlineReady": "Site cached for offline use. You can now use it without Internet.",
+		"updateRefresh": "Update available. Refresh to load the latest version!",
+		"refresh": "Refresh"
 	}
 }

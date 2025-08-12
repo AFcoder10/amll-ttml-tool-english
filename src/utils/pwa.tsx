@@ -6,14 +6,20 @@ import { Button, Flex } from "@radix-ui/themes";
 const refresh = registerSW({
 	onOfflineReady() {
 		toast.info(
-			t("pwa.offlineReady", "网站已成功离线缓存，后续可离线访问本网页"),
+			t(
+				"pwa.offlineReady",
+				"Site cached for offline use. You can now use it without Internet.",
+			),
 		);
 	},
 	onNeedRefresh() {
 		toast.info(
 			<Flex direction="column" gap="2" align="stretch">
 				<div>
-					{t("pwa.updateRefresh", "网站已更新，刷新网页以使用最新版本！")}
+					{t(
+						"pwa.updateRefresh",
+						"Update available. Refresh to load the latest version!",
+					)}
 				</div>
 				<Button
 					size="2"
@@ -21,7 +27,7 @@ const refresh = registerSW({
 						refresh(true);
 					}}
 				>
-					{t("pwa.refresh", "刷新")}
+					{t("pwa.refresh", "Refresh")}
 				</Button>
 			</Flex>,
 		);
