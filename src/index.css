@@ -1,5 +1,9 @@
 :root {
-	font-family: "MiSans", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	/* Font stacks */
+	--font-ui: Inter, "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "MiSans", system-ui, Avenir, Helvetica, Arial, sans-serif;
+	--font-display: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, Inter, "MiSans", system-ui, Avenir, Helvetica, Arial, sans-serif;
+	/* Base UI/body copy uses UI stack */
+	font-family: var(--font-ui);
 	line-height: 1.5;
 	font-weight: 400;
 
@@ -10,11 +14,87 @@
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+
+	/* Color + gradient design tokens */
+	--pastel-red: #fbc2d6;
+	--pastel-blue: #cfe4ff;
+	--pastel-rose: #ffd5dc;
+	/* Subtle neutralized accent gradient (darker + slight color drift) */
+	--gradient-accent: linear-gradient(140deg, #2a303a 0%, #323a46 55%, #2f3641 100%);
+	--gradient-accent-hover: linear-gradient(140deg, #313844 0%, #3a4350 55%, #343c48 100%);
+	--glass-bg: rgba(255, 255, 255, 0.08);
+	--glass-border: rgba(255, 255, 255, 0.18);
+	--glass-bg-strong: rgba(255, 255, 255, 0.14);
+	--ease-out: cubic-bezier(.16,.84,.44,1);
+	--ease-in: cubic-bezier(.4,0,.2,1);
+	--ease-bounce: cubic-bezier(.34,1.56,.64,1);
 }
 
+body, html { margin: 0; padding: 0; }
+
+body {
+	background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.06), rgba(255,255,255,0) 60%),
+		linear-gradient(120deg, rgba(255,255,255,0.04), rgba(255,255,255,0) 40%),
+		linear-gradient(180deg, #0d1117 0%, #101826 100%);
+	min-height: 100vh;
+	background-attachment: fixed;
+	position: relative;
+	--bg-move: 0deg;
+}
+
+body::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	background: linear-gradient(var(--bg-move), rgba(255,255,255,0.025), rgba(255,255,255,0) 70%);
+	pointer-events: none;
+	animation: bg-rotate 40s linear infinite;
+}
+
+@keyframes bg-rotate { 0% { --bg-move: 0deg; } 100% { --bg-move: 360deg; } }
+
 .radix-themes {
-	--default-font-family: "MiSans", Inter, system-ui, Avenir, Helvetica, Arial,
-		sans-serif;
+	--default-font-family: var(--font-ui);
+}
+
+/* Headings & emphasized UI titles use SF Pro Display for a distinct look */
+/* Display font usage: headings, primary buttons, menu / dialog titles */
+h1, h2, h3, h4, h5, h6,
+[data-accent-heading],
+.amll-heading,
+.rt-Heading,
+.rt-DialogTitle,
+.rt-AlertDialogTitle,
+/* Buttons (soft / solid / outline) */
+.rt-BaseButton,
+/* Top toolbar / menu triggers often appear as buttons */
+header .rt-BaseButton,
+.top-menu,
+nav .rt-BaseButton,
+/* Bold emphasized text keeps UI font but optionally display; restrict to larger sizes below */
+.rt-Text:where([data-weight="bold"][data-size="6"], [data-weight="bold"][data-size="5"]) {
+	font-family: var(--font-display);
+	font-feature-settings: "liga" 1, "kern" 1;
+}
+
+/* Utility classes for manual control */
+.font-display { font-family: var(--font-display) !important; }
+.font-ui { font-family: var(--font-ui) !important; }
+
+@font-face {
+	font-family: "SF Pro Display";
+	src: url("../SF-Pro-Display-Regular.otf") format("opentype");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Inter";
+	src: url("../Inter-VariableFont_opsz,wght.ttf") format("truetype-variations");
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
 }
 
 ::-webkit-scrollbar-track {
@@ -43,16 +123,50 @@
 }
 
 .rt-BaseButton:where(.rt-variant-soft) {
-	background-color: var(--accent-a3);
+	background: var(--gradient-accent);
+	color: #e7ebf2;
+	font-weight: 500;
+	position: relative;
+	border: 1px solid rgba(255,255,255,0.08);
+	box-shadow: 0 1px 2px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04) inset;
+	backdrop-filter: blur(10px) saturate(1.1);
+	transition: background .35s var(--ease-out), transform .35s var(--ease-out), box-shadow .4s var(--ease-out);
 
-	&:hover {
-		background-color: var(--accent-a4);
-	}
+	&:hover { background: var(--gradient-accent-hover); box-shadow: 0 2px 4px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06) inset; }
 }
 
 .rt-BaseButton:where(.rt-variant-soft):where(:active:not([data-state="open"])) {
-	background-color: var(--accent-a5);
+	transform: translateY(1px);
 }
+
+/* Glassmorphism utility containers */
+.glass {
+	background: var(--glass-bg);
+	backdrop-filter: blur(18px) saturate(1.4);
+	-webkit-backdrop-filter: blur(18px) saturate(1.4);
+	border: 1px solid var(--glass-border);
+	border-radius: 16px;
+	box-shadow: 0 4px 16px -4px rgba(0,0,0,0.4), 0 2px 4px -2px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.05) inset;
+	transition: background .6s var(--ease-out), box-shadow .6s var(--ease-out), transform .6s var(--ease-bounce);
+}
+.glass:hover { background: var(--glass-bg-strong); box-shadow: 0 6px 26px -6px rgba(0,0,0,0.55), 0 3px 8px -2px rgba(0,0,0,0.35); }
+.glass:active { transform: translateY(2px) scale(.985); }
+.glass-borderless { border: none; }
+.glass-strong { background: var(--glass-bg-strong); }
+
+.gradient-btn { background: var(--gradient-accent); color: #e2e6ed; border: 1px solid rgba(255,255,255,0.07); box-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05) inset; }
+.gradient-btn:hover { background: var(--gradient-accent-hover); }
+.gradient-btn:active { transform: translateY(1px); }
+
+@keyframes ui-pop-fade-in { 0% { opacity:0; transform: translateY(6px) scale(.96); filter: blur(4px);} 60% { filter:blur(0);} 100% { opacity:1; transform: translateY(0) scale(1);} }
+@keyframes ui-pop-fade-out { 0% { opacity:1; transform: translateY(0) scale(1);} 100% { opacity:0; transform: translateY(4px) scale(.985); filter: blur(4px);} }
+
+.rt-DialogContent,[data-radix-popper-content-wrapper] > *:not(style),.rt-DropdownMenuContent { animation: ui-pop-fade-in .55s var(--ease-out); }
+[data-state="closed"].rt-DialogContent,[data-radix-popper-content-wrapper][data-state="closed"] > *:not(style),[data-state="closed"].rt-DropdownMenuContent { animation: ui-pop-fade-out .35s var(--ease-in); }
+
+.rt-MenuItem,.rt-DropdownMenuItem,.rt-ContextMenuItem { transition: background .4s var(--ease-out), color .4s var(--ease-out); }
+
+::-webkit-scrollbar-thumb { backdrop-filter: blur(10px); }
 
 .amll-lyric-player {
 	margin: 0 !important;

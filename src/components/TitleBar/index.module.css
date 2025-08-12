@@ -7,6 +7,26 @@
 	}
 }
 
+/* Language toggle specific styling */
+.langToggle {
+	min-width: 38px; /* room for EN / 中 */
+	padding-inline: 10px;
+	font-family: var(--font-display);
+	font-weight: 600;
+	letter-spacing: .5px;
+	line-height: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	/* subtle glass / gradient blend */
+	background: var(--gradient-accent);
+	border: 1px solid rgba(255,255,255,0.1);
+	box-shadow: 0 1px 2px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05) inset;
+}
+
+.langToggle:hover { background: var(--gradient-accent-hover); }
+.langToggle:active { transform: translateY(1px); }
+
 @media screen and (max-width: 768px) {
 	.title {
 		display: none;

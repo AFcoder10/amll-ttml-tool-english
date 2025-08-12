@@ -4,7 +4,7 @@
 		"loadingSyncPage": "Loading Sync Page",
 		"loadingAMLLPreviewPage": "Loading AMLL Lyrics Preview Page",
 		"wip": {
-			"warning": "This refactored version is still under development. Please back up and save your project frequently to avoid unexpected data loss!"
+			"warning": "Back up and save your project frequently to avoid unexpected data loss!"
 		}
 	},
 	"topBar": {
@@ -112,6 +112,15 @@
 		"empty": "None",
 		"insertWordPlaceholder": "Insert word...",
 		"insertNewLineBefore": "Insert new line here"
+	},
+	"splitWordDialog": {
+		"title": "Split/Replace Word",
+		"tip": "After splitting, new words will evenly divide the original start/end time by character length; any empty beats will be removed.",
+		"originalWord": "Template to Split/Replace",
+		"delimiter": "Delimiter",
+		"previewTitle": "Preview",
+		"spaceCount": "Space x{count}",
+		"empty": "Empty"
 	},
 	"lyricSyncEditor": {
 		"unselectedTip": "No lyrics selected\nClick on a line below to start syncing"
@@ -266,7 +275,7 @@
 	},
 	"lyricWordView": {
 		"empty": "Empty",
-		"spaceCount": "Space x{{count}}"
+		"spaceCount": "Space x{count}"
 	},
 	"common": {
 		"about": "About"
@@ -467,6 +476,7 @@
 			"spotifyId": "Spotify Track ID",
 			"appleMusicId": "Apple Music Track ID",
 			"isrc": "ISRC Code",
+			"songwriter": "Songwriter",
 			"musicName": "Track Name",
 			"artists": "Artists",
 			"album": "Album",

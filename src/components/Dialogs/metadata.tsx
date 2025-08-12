@@ -41,6 +41,11 @@ export const MetadataEditor = () => {
 				value: "musicName",
 			},
 			{
+				// 歌词作者（曲/词作者）
+				label: t("metadataDialog.builtinOptions.songwriter", "歌曲作者"),
+				value: "songwriter",
+			},
+			{
 				// 歌词所匹配的歌手名
 				label: t("metadataDialog.builtinOptions.artists", "歌曲的艺术家"),
 				value: "artists",

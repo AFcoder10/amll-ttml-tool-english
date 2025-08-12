@@ -65,6 +65,13 @@ export default function exportTTMLText(
 		"http://music.apple.com/lyric-ttml-internal",
 	);
 
+	// Language & timing attributes (Word timing if dynamic lyric, else Line)
+	const isDynamicLyricPrecheck = lyric.some(
+		(line) => line.words.filter((v) => v.word.trim().length > 0).length > 1,
+	);
+	ttRoot.setAttribute("itunes:timing", isDynamicLyricPrecheck ? "Word" : "Line");
+	ttRoot.setAttribute("xml:lang", "en");
+
 	doc.appendChild(ttRoot);
 
 	const head = doc.createElement("head");
@@ -89,7 +96,34 @@ export default function exportTTMLText(
 		metadataEl.appendChild(otherPersonAgent);
 	}
 
+	// Extract songwriter metadata first to emit within metadata (matching expected structure)
+	const songwriterMeta = ttmlLyric.metadata.find(
+		(m) => m.key === "songwriter" && m.value.some((v) => v.trim().length > 0),
+	);
+
+	if (songwriterMeta) {
+		const iTunesMetadata = doc.createElement("iTunesMetadata");
+		iTunesMetadata.setAttribute("xmlns", "http://music.apple.com/lyric-ttml-internal");
+		iTunesMetadata.setAttribute("leadingSilence", "0");
+		const translationsEl = doc.createElement("translations");
+		iTunesMetadata.appendChild(translationsEl);
+		const songwritersEl = doc.createElement("songwriters");
+		for (const name of songwriterMeta.value) {
+			const trimmed = name.trim();
+			if (!trimmed) continue;
+			const swEl = doc.createElement("songwriter");
+			swEl.appendChild(doc.createTextNode(trimmed));
+			songwritersEl.appendChild(swEl);
+		}
+		if (songwritersEl.childNodes.length > 0) {
+			iTunesMetadata.appendChild(songwritersEl);
+			metadataEl.appendChild(iTunesMetadata);
+		}
+	}
+
+	// Append remaining metadata entries except songwriter (already represented)
 	for (const metadata of ttmlLyric.metadata) {
+		if (metadata.key === "songwriter") continue;
 		for (const value of metadata.value) {
 			const metaEl = doc.createElement("amll:meta");
 			metaEl.setAttribute("key", metadata.key);
@@ -104,9 +138,7 @@ export default function exportTTMLText(
 
 	const guessDuration = lyric[lyric.length - 1]?.endTime ?? 0;
 	body.setAttribute("dur", msToTimestamp(guessDuration));
-	const isDynamicLyric = lyric.some(
-		(line) => line.words.filter((v) => v.word.trim().length > 0).length > 1,
-	);
+	const isDynamicLyric = isDynamicLyricPrecheck;
 
 	for (const param of params) {
 		const paramDiv = doc.createElement("div");

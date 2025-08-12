@@ -11,7 +11,7 @@ import {
 	toolModeAtom,
 } from "$/states/main.ts";
 import { useKeyBindingAtom } from "$/utils/keybindings.ts";
-import { SegmentedControl, Text, IconButton, Tooltip } from "@radix-ui/themes";
+import { SegmentedControl, Text, Tooltip, Button } from "@radix-ui/themes";
 import { useAtom } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
 import { type FC, useCallback } from "react";
@@ -62,18 +62,19 @@ export const TitleBar: FC = () => {
 			}
 			endChildren={
 				<>
-					<Tooltip content={t("topBar.menu.languageToggleTooltip", "切换语言")}> 
-						<IconButton
+					<Tooltip content={t("topBar.menu.languageToggleTooltip", "切换语言")}>
+						<Button
 							variant="soft"
 							size="1"
 							mr="2"
+							className={styles.langToggle}
 							onClick={() => {
 								const next = i18n.language === "zh-CN" ? "en-US" : "zh-CN";
 								setAppLanguage(next);
 							}}
 						>
 							{ i18n.language === "zh-CN" ? t("topBar.menu.languageShortEn", "EN") : t("topBar.menu.languageShortZh", "中") }
-						</IconButton>
+						</Button>
 					</Tooltip>
 					{!import.meta.env.TAURI_ENV_PLATFORM && (
 						<Text color="gray" wrap="nowrap" size="2" mr="2">

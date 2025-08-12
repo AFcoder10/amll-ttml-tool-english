@@ -465,7 +465,7 @@
 		"originalWord": "拆分/替换模板",
 		"delimiter": "分隔符",
 		"previewTitle": "拆分预览",
-		"spaceCount": "空格x{{count}}",
+		"spaceCount": "空格x{count}",
 		"empty": "空白"
 	},
 	"submitToAMLLDB": {
@@ -483,7 +483,7 @@
 	},
 	"lyricWordView": {
 		"empty": "空白",
-		"spaceCount": "空格 x{{count}}"
+		"spaceCount": "空格 x{count}"
 	},
 	"settings": {
 		"common": {
