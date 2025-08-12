@@ -16,6 +16,7 @@ import {
 	stringifyYrc,
 } from "@applemusic-like-lyrics/lyric";
 import { DropdownMenu } from "@radix-ui/themes";
+import { Trans } from "react-i18next";
 import { useSetAtom, useStore } from "jotai";
 import saveFile from "save-file";
 import { uid } from "uid";
@@ -79,48 +80,52 @@ export const ImportExportLyric = () => {
 	return (
 		<>
 			<DropdownMenu.Sub>
-				<DropdownMenu.SubTrigger>导入歌词...</DropdownMenu.SubTrigger>
+				<DropdownMenu.SubTrigger>
+					<Trans i18nKey="topBar.menu.importLyric">导入歌词...</Trans>
+				</DropdownMenu.SubTrigger>
 				<DropdownMenu.SubContent>
 					<DropdownMenu.Item onClick={() => setImportFromTextDialog(true)}>
-						从纯文本导入
+						<Trans i18nKey="topBar.menu.importLyricFromText">从纯文本导入</Trans>
 					</DropdownMenu.Item>
 					<DropdownMenu.Item onClick={onImportLyric(parseLrc, "lrc")}>
-						从 LyRiC 文件导入
+						<Trans i18nKey="topBar.menu.importLyricFromLrc">从 LyRiC 文件导入</Trans>
 					</DropdownMenu.Item>
 					<DropdownMenu.Item onClick={onImportLyric(parseEslrc, "lrc")}>
-						从 ESLyRiC 文件导入
+						<Trans i18nKey="topBar.menu.importLyricFromEslrc">从 ESLyRiC 文件导入</Trans>
 					</DropdownMenu.Item>
 					<DropdownMenu.Item onClick={onImportLyric(parseQrc, "qrc")}>
-						从 QRC 文件导入
+						<Trans i18nKey="topBar.menu.importLyricFromQrc">从 QRC 文件导入</Trans>
 					</DropdownMenu.Item>
 					<DropdownMenu.Item onClick={onImportLyric(parseYrc, "yrc")}>
-						从 YRC 文件导入
+						<Trans i18nKey="topBar.menu.importLyricFromYrc">从 YRC 文件导入</Trans>
 					</DropdownMenu.Item>
 					<DropdownMenu.Item onClick={onImportLyric(parseLys, "lys")}>
-						从 Lyricify Syllable 文件导入
+						<Trans i18nKey="topBar.menu.importLyricFromLys">从 Lyricify Syllable 文件导入</Trans>
 					</DropdownMenu.Item>
 				</DropdownMenu.SubContent>
 			</DropdownMenu.Sub>
 			<DropdownMenu.Sub>
-				<DropdownMenu.SubTrigger>导出歌词...</DropdownMenu.SubTrigger>
+				<DropdownMenu.SubTrigger>
+					<Trans i18nKey="topBar.menu.exportLyric">导出歌词...</Trans>
+				</DropdownMenu.SubTrigger>
 				<DropdownMenu.SubContent>
 					<DropdownMenu.Item onClick={onExportLyric(stringifyLrc, "lrc")}>
-						导出到 LyRiC
+						<Trans i18nKey="topBar.menu.exportLyricToLrc">导出到 LyRiC</Trans>
 					</DropdownMenu.Item>
 					<DropdownMenu.Item onClick={onExportLyric(stringifyEslrc, "lrc")}>
-						导出到 ESLyRiC
+						<Trans i18nKey="topBar.menu.exportLyricToEslrc">导出到 ESLyRiC</Trans>
 					</DropdownMenu.Item>
 					<DropdownMenu.Item onClick={onExportLyric(stringifyQrc, "qrc")}>
-						导出到 QRC
+						<Trans i18nKey="topBar.menu.exportLyricToQrc">导出到 QRC</Trans>
 					</DropdownMenu.Item>
 					<DropdownMenu.Item onClick={onExportLyric(stringifyYrc, "yrc")}>
-						导出到 YRC
+						<Trans i18nKey="topBar.menu.exportLyricToYrc">导出到 YRC</Trans>
 					</DropdownMenu.Item>
 					<DropdownMenu.Item onClick={onExportLyric(stringifyLys, "lys")}>
-						导出到 Lyricify Syllable
+						<Trans i18nKey="topBar.menu.exportLyricToLys">导出到 Lyricify Syllable</Trans>
 					</DropdownMenu.Item>
 					<DropdownMenu.Item onClick={onExportLyric(stringifyAss, "ass")}>
-						导出到 ASS 字幕
+						<Trans i18nKey="topBar.menu.exportLyricToAss">导出到 ASS 字幕</Trans>
 					</DropdownMenu.Item>
 				</DropdownMenu.SubContent>
 			</DropdownMenu.Sub>

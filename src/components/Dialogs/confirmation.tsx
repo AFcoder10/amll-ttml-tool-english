@@ -1,9 +1,11 @@
 import { confirmDialogAtom } from "$/states/dialogs";
 import { Button, Dialog, Flex } from "@radix-ui/themes";
+import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
 
 export const ConfirmationDialog = () => {
 	const [dialogState, setDialogState] = useAtom(confirmDialogAtom);
+const { t } = useTranslation();
 
 	const handleConfirm = () => {
 		dialogState.onConfirm?.();
@@ -21,9 +23,9 @@ export const ConfirmationDialog = () => {
 				<Dialog.Description>{dialogState.description}</Dialog.Description>
 				<Flex gap="3" mt="4" justify="end">
 					<Button variant="soft" color="gray" onClick={handleCancel}>
-						取消
+						{t("confirmation.cancel", "取消")}
 					</Button>
-					<Button onClick={handleConfirm}>确认</Button>
+					<Button onClick={handleConfirm}>{t("confirmation.confirm", "确认")}</Button>
 				</Flex>
 			</Dialog.Content>
 		</Dialog.Root>

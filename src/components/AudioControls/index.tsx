@@ -11,7 +11,6 @@
 
 import { AudioSlider } from "$/components/AudioControls/audio-slider.tsx";
 import {
-	audioElAtom,
 	audioPlayingAtom,
 	currentDurationAtom,
 	currentTimeAtom,
@@ -48,6 +47,7 @@ import {
 } from "@radix-ui/themes";
 import { useAtom, useAtomValue, useStore } from "jotai";
 import { type FC, memo, useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const AudioPlaybackKeyBinding = memo(() => {
 	const store = useStore();
@@ -115,6 +115,7 @@ const AudioPlaybackKeyBinding = memo(() => {
 });
 
 export const AudioControls: FC = memo(() => {
+	const { t } = useTranslation();
 	const [audioLoaded, setAudioLoaded] = useState(false);
 	const currentTime = useAtomValue(currentTimeAtom);
 	const currentDuration = useAtomValue(currentDurationAtom);
@@ -206,7 +207,7 @@ export const AudioControls: FC = memo(() => {
 						<HoverCard.Content>
 							<Flex direction="column" align="center">
 								<Grid columns="0fr 7em 2em" gap="2" align="baseline">
-									<Text wrap="nowrap">音量</Text>
+									<Text wrap="nowrap">{t("audio.volume", "音量")}</Text>
 									<Slider
 										min={0}
 										max={1}
@@ -217,7 +218,7 @@ export const AudioControls: FC = memo(() => {
 									<Text wrap="nowrap" color="gray" size="1">
 										{(volume * 100).toFixed()}%
 									</Text>
-									<Text wrap="nowrap">播放速度</Text>
+									<Text wrap="nowrap">{t("audio.playbackRate", "播放速度")}</Text>
 									<Slider
 										min={0.05}
 										max={2}
@@ -230,12 +231,12 @@ export const AudioControls: FC = memo(() => {
 									</Text>
 								</Grid>
 								<Text wrap="nowrap" align="center" mt="2" size="1" color="gray">
-									点击图标按钮以加载音乐
+									{t("audio.loadMusicHoverHint", "点击图标按钮以加载音乐")}
 								</Text>
 							</Flex>
 						</HoverCard.Content>
 					</HoverCard.Root>
-					<Tooltip content="暂停 / 播放音乐">
+					<Tooltip content={t("audio.pausePlayHint", "暂停 / 播放音乐")}>
 						<IconButton
 							my="2"
 							ml="0"

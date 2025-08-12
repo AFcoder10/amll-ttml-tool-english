@@ -16,6 +16,7 @@ import {
 	toolModeAtom,
 } from "$/states/main.ts";
 import { Box, Flex, Text } from "@radix-ui/themes";
+import { useTranslation } from "react-i18next";
 import { atom, useAtomValue } from "jotai";
 import { focusAtom } from "jotai-optics";
 import { splitAtom } from "jotai/utils";
@@ -39,6 +40,7 @@ export const LyricLinesView: FC = forwardRef<HTMLDivElement>((_props, ref) => {
 	const viewRef = useRef<ViewportListRef>(null);
 	const viewElRef = useRef<HTMLDivElement>(null);
 	const toolMode = useAtomValue(toolModeAtom);
+	const { t } = useTranslation();
 
 	const scrollToIndexAtom = useMemo(
 		() =>
@@ -92,9 +94,14 @@ export const LyricLinesView: FC = forwardRef<HTMLDivElement>((_props, ref) => {
 				height="100%"
 				ref={ref}
 			>
-				<Text color="gray">没有歌词行</Text>
 				<Text color="gray">
-					在顶部面板中添加新歌词行或从菜单栏打开 / 导入已有歌词
+					{t("emptyStates.noLyricLines", "没有歌词行")}
+				</Text>
+				<Text color="gray" style={{ textAlign: "center" }}>
+					{t(
+						"emptyStates.hintAddOrImportDetailed",
+						"在顶部面板中添加新歌词行或从菜单栏打开 / 导入已有歌词",
+					)}
 				</Text>
 			</Flex>
 		);

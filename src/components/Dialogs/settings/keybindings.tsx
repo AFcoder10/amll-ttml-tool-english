@@ -29,9 +29,10 @@ import {
 	type KeyBindingAtom,
 } from "$/states/keybindings";
 import { formatKeyBindings, recordShortcut } from "$/utils/keybindings";
-import { Box, Button, Grid, Table, TextField } from "@radix-ui/themes";
+import { Box, Grid, TextField } from "@radix-ui/themes";
 import { useAtom } from "jotai";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface KeyBindingsEntry {
 	atom: KeyBindingAtom;
@@ -43,34 +44,35 @@ const kb = (thisAtom: KeyBindingAtom, label: string): KeyBindingsEntry => ({
 	label,
 });
 
-const ENTRIES: KeyBindingsEntry[] = [
-	kb(keyNewFileAtom, "新建文件"),
-	kb(keyOpenFileAtom, "打开文件"),
-	kb(keySaveFileAtom, "保存文件"),
-	kb(keyOpenAudioAtom, "打开音频文件"),
-	kb(keyUndoAtom, "撤销"),
-	kb(keyRedoAtom, "重做"),
-	kb(keySelectAllAtom, "全选"),
-	kb(keySelectInvertedAtom, "反选"),
-	kb(keySelectWordsOfMatchedSelectionAtom, "选中同类单词"),
-	kb(keyDeleteSelectionAtom, "删除所选"),
-	kb(keySwitchEditModeAtom, "模式切换 - 切换到编辑模式"),
-	kb(keySwitchSyncModeAtom, "模式切换 - 切换到打轴模式"),
-	kb(keySwitchPreviewModeAtom, "模式切换 - 切换到预览模式"),
-	kb(keyMoveNextWordAtom, "打轴 - 移动到下一个单词"),
-	kb(keyMovePrevWordAtom, "打轴 - 移动到上一个单词"),
-	kb(keyMoveNextLineAtom, "打轴 - 移动到下一行开头"),
-	kb(keyMovePrevLineAtom, "打轴 - 移动到上一行开头"),
-	kb(keySyncStartAtom, "打轴 - 初始打轴"),
-	kb(keySyncNextAtom, "打轴 - 步进打轴"),
-	kb(keySyncEndAtom, "打轴 - 间奏打轴"),
-	kb(keyPlayPauseAtom, "播放 - 暂停/继续播放"),
-	kb(keySeekForwardAtom, "播放 - 快进 5 秒"),
-	kb(keySeekBackwardAtom, "播放 - 快退 5 秒"),
-	kb(keyVolumeUpAtom, "播放 - 调高音量"),
-	kb(keyVolumeDownAtom, "播放 - 调低音量"),
-	kb(keyPlaybackRateUpAtom, "播放 - 增加播放速度"),
-	kb(keyPlaybackRateDownAtom, "播放 - 降低播放速度"),
+// ENTRIES built dynamically to allow i18n
+const buildEntries = (t: (k: string, d?: string) => string): KeyBindingsEntry[] => [
+	kb(keyNewFileAtom, t("keybindings.newFile", "New File")),
+	kb(keyOpenFileAtom, t("keybindings.openFile", "Open File")),
+	kb(keySaveFileAtom, t("keybindings.saveFile", "Save File")),
+	kb(keyOpenAudioAtom, t("keybindings.openAudioFile", "Open Audio File")),
+	kb(keyUndoAtom, t("keybindings.undo", "Undo")),
+	kb(keyRedoAtom, t("keybindings.redo", "Redo")),
+	kb(keySelectAllAtom, t("keybindings.selectAll", "Select All")),
+	kb(keySelectInvertedAtom, t("keybindings.invertSelect", "Invert Selection")),
+	kb(keySelectWordsOfMatchedSelectionAtom, t("keybindings.selectMatchedWords", "Select Matching Words")),
+	kb(keyDeleteSelectionAtom, t("keybindings.deleteSelection", "Delete Selection")),
+	kb(keySwitchEditModeAtom, t("keybindings.switchToEditMode", "Switch Mode - Edit Mode")),
+	kb(keySwitchSyncModeAtom, t("keybindings.switchToSyncMode", "Switch Mode - Sync Mode")),
+	kb(keySwitchPreviewModeAtom, t("keybindings.switchToPreviewMode", "Switch Mode - Preview Mode")),
+	kb(keyMoveNextWordAtom, t("keybindings.syncMoveNextWord", "Sync - Move to Next Word")),
+	kb(keyMovePrevWordAtom, t("keybindings.syncMovePrevWord", "Sync - Move to Previous Word")),
+	kb(keyMoveNextLineAtom, t("keybindings.syncMoveNextLine", "Sync - Move to Next Line Start")),
+	kb(keyMovePrevLineAtom, t("keybindings.syncMovePrevLine", "Sync - Move to Previous Line Start")),
+	kb(keySyncStartAtom, t("keybindings.syncStart", "Sync - Start Axis")),
+	kb(keySyncNextAtom, t("keybindings.syncStep", "Sync - Step Axis")),
+	kb(keySyncEndAtom, t("keybindings.syncEnd", "Sync - End Axis")),
+	kb(keyPlayPauseAtom, t("keybindings.playPause", "Playback - Play/Pause")),
+	kb(keySeekForwardAtom, t("keybindings.seekForward5s", "Playback - Seek Forward 5s")),
+	kb(keySeekBackwardAtom, t("keybindings.seekBackward5s", "Playback - Seek Backward 5s")),
+	kb(keyVolumeUpAtom, t("keybindings.volumeUp", "Playback - Volume Up")),
+	kb(keyVolumeDownAtom, t("keybindings.volumeDown", "Playback - Volume Down")),
+	kb(keyPlaybackRateUpAtom, t("keybindings.speedUp", "Playback - Increase Speed")),
+	kb(keyPlaybackRateDownAtom, t("keybindings.speedDown", "Playback - Decrease Speed")),
 ];
 
 const KeyBindingsEdit = ({
@@ -80,6 +82,7 @@ const KeyBindingsEdit = ({
 }) => {
 	const [key, setKey] = useAtom(entry.atom);
 	const [listening, setListening] = useState(false);
+	const { t } = useTranslation();
 
 	return (
 		<>
@@ -97,7 +100,7 @@ const KeyBindingsEdit = ({
 						}
 					}}
 					size="1"
-					value={listening ? "请按下按键..." : formatKeyBindings(key)}
+					value={listening ? t("keybindings.pressKeys", "Press keys...") : formatKeyBindings(key)}
 					readOnly
 				/>
 			</Box>
@@ -106,9 +109,13 @@ const KeyBindingsEdit = ({
 };
 
 export const SettingsKeyBindingsDialog = () => {
+	const { t } = useTranslation();
+	// Wrap i18next t to allow (key, defaultValue)
+	const tWithDefault = (key: string, def?: string) => t(key, def ? { defaultValue: def } : undefined);
+	const entries = buildEntries(tWithDefault);
 	return (
 		<Grid columns="2" gapY="2">
-			{ENTRIES.map((entry) => (
+			{entries.map((entry) => (
 				<KeyBindingsEdit key={entry.label} entry={entry} />
 			))}
 		</Grid>

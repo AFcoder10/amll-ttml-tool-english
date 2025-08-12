@@ -33,7 +33,7 @@ export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
 
 		return (
 			<RibbonFrame ref={ref}>
-				<RibbonSection label={t("ribbonBar.previewMode.lyrics", "歌词")}>
+				<RibbonSection label={t("ribbonBar.previewMode.lyric", "歌词")}>
 					<Grid columns="0fr 0fr" gap="2" gapY="1" flexGrow="1" align="center">
 						<Text wrap="nowrap" size="1">
 							{t("ribbonBar.previewMode.showTranslation", "显示翻译")}

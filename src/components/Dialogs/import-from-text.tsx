@@ -21,6 +21,7 @@ import { atom, useAtom, useStore } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { type PropsWithChildren, memo, useCallback } from "react";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 // import styles from "./import-from-text.module.css";
 import error = toast.error;
 
@@ -97,6 +98,7 @@ export const ImportFromText = () => {
 	const [importFromTextDialog, setImportFromTextDialog] = useAtom(
 		importFromTextDialogAtom,
 	);
+	const { t } = useTranslation();
 
 	const [importMode, setImportMode] = useAtom(importModeAtom);
 	const [lineSeparatorMode, setLineSeparatorMode] = useAtom(
@@ -282,7 +284,7 @@ export const ImportFromText = () => {
 								flex: "1 1 auto",
 							}}
 						>
-							导入纯文本歌词
+							{t("importFromText.title", "导入纯文本歌词")}
 						</Dialog.Title>
 						<Button
 							onClick={() => {
@@ -291,13 +293,13 @@ export const ImportFromText = () => {
 									setImportFromTextDialog(false);
 								} catch (e) {
 									error(
-										"导入纯文本歌词失败，请检查输入的文本是否正确，或者导入设置是否正确",
+													 t("importFromText.failed", "导入纯文本歌词失败，请检查输入的文本是否正确，或者导入设置是否正确"),
 									);
 									logError(e);
 								}
 							}}
 						>
-							导入歌词
+							{t("importFromText.importBtn", "导入歌词")}
 						</Button>
 					</Flex>
 					<Flex
@@ -333,27 +335,21 @@ export const ImportFromText = () => {
 								textAlign: "end",
 							}}
 						>
-							<PrefText>导入模式</PrefText>
+							<PrefText>{t("importFromText.importMode", "导入模式")}</PrefText>
 							<Select.Root
 								value={importMode}
 								onValueChange={(v) => setImportMode(v as ImportMode)}
 							>
 								<Select.Trigger />
 								<Select.Content>
-									<Select.Item value={ImportMode.Lyric}>仅歌词</Select.Item>
-									<Select.Item value={ImportMode.LyricTrans}>
-										歌词和翻译歌词
-									</Select.Item>
-									<Select.Item value={ImportMode.LyricRoman}>
-										歌词和音译歌词
-									</Select.Item>
-									<Select.Item value={ImportMode.LyricTransRoman}>
-										歌词和翻译、音译歌词
-									</Select.Item>
+									<Select.Item value={ImportMode.Lyric}>{t("importFromText.mode.lyric", "Lyrics Only")}</Select.Item>
+									<Select.Item value={ImportMode.LyricTrans}>{t("importFromText.mode.lyricTrans", "Lyrics + Translation")}</Select.Item>
+									<Select.Item value={ImportMode.LyricRoman}>{t("importFromText.mode.lyricRoman", "Lyrics + Romanization")}</Select.Item>
+									<Select.Item value={ImportMode.LyricTransRoman}>{t("importFromText.mode.lyricTransRoman", "Lyrics + Translation + Romanization")}</Select.Item>
 								</Select.Content>
 							</Select.Root>
 
-							<PrefText>歌词分行（翻译和音译）模式</PrefText>
+							<PrefText>{t("importFromText.lyricSplitMode", "歌词分行（翻译和音译）模式")}</PrefText>
 							<Select.Root
 								disabled={importMode === ImportMode.Lyric}
 								value={lineSeparatorMode}
@@ -363,16 +359,12 @@ export const ImportFromText = () => {
 							>
 								<Select.Trigger />
 								<Select.Content>
-									<Select.Item value={LineSeparatorMode.Interleaved}>
-										多行交错分隔
-									</Select.Item>
-									<Select.Item value={LineSeparatorMode.SameLineSeparator}>
-										同行分隔
-									</Select.Item>
+									<Select.Item value={LineSeparatorMode.Interleaved}>{t("importFromText.splitMode.interleaved", "Multi-line Interleaved")}</Select.Item>
+									<Select.Item value={LineSeparatorMode.SameLineSeparator}>{t("importFromText.splitMode.sameLine", "Same-line Separator")}</Select.Item>
 								</Select.Content>
 							</Select.Root>
 
-							<PrefText>歌词行分隔符</PrefText>
+							<PrefText>{t("importFromText.sameLineSeparator", "歌词行分隔符")}</PrefText>
 							<TextField.Root
 								disabled={
 									importMode === ImportMode.Lyric ||
@@ -382,45 +374,45 @@ export const ImportFromText = () => {
 								onChange={(evt) => setLineSeparator(evt.currentTarget.value)}
 							/>
 
-							<PrefText>交换翻译行和音译行</PrefText>
+							<PrefText>{t("importFromText.swapTransAndRoman", "交换翻译行和音译行")}</PrefText>
 							<Switch
 								checked={swapTransAndRoman}
 								onCheckedChange={setSwapTransAndRoman}
 							/>
 
-							<PrefText>单词分隔符</PrefText>
+							<PrefText>{t("importFromText.wordSeparator", "单词分隔符")}</PrefText>
 							<TextField.Root
 								value={wordSeparator}
 								onChange={(evt) => setWordSeparator(evt.currentTarget.value)}
 							/>
 
-							<PrefText>启用特殊前缀</PrefText>
+							<PrefText>{t("importFromText.enablePrefixMarkup", "启用特殊前缀")}</PrefText>
 							<Switch
 								checked={enableSpecialPrefix}
 								onCheckedChange={setEnableSpecialPrefix}
 							/>
 
-							<PrefText>背景歌词前缀</PrefText>
+							<PrefText>{t("importFromText.bgLinePrefix", "背景歌词前缀")}</PrefText>
 							<TextField.Root
 								disabled={!enableSpecialPrefix}
 								value={bgLyricPrefix}
 								onChange={(evt) => setBgLyricPrefix(evt.currentTarget.value)}
 							/>
 
-							<PrefText>对唱歌词前缀</PrefText>
+							<PrefText>{t("importFromText.duetLinePrefix", "对唱歌词前缀")}</PrefText>
 							<TextField.Root
 								disabled={!enableSpecialPrefix}
 								value={duetLyricPrefix}
 								onChange={(evt) => setDuetLyricPrefix(evt.currentTarget.value)}
 							/>
 
-							<PrefText>启用空拍</PrefText>
+							<PrefText>{t("importFromText.emptyBeat", "启用空拍")}</PrefText>
 							<Switch
 								checked={enableEmptyBeat}
 								onCheckedChange={setEnableEmptyBeat}
 							/>
 
-							<PrefText>空拍符号</PrefText>
+							<PrefText>{t("importFromText.emptyBeatMark", "空拍符号")}</PrefText>
 							<TextField.Root
 								disabled={!enableEmptyBeat}
 								value={emptyBeatSymbol}

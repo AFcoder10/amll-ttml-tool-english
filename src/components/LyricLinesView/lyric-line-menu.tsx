@@ -1,5 +1,6 @@
 import { lyricLinesAtom, selectedLinesAtom } from "$/states/main";
 import { ContextMenu } from "@radix-ui/themes";
+import { useTranslation } from "react-i18next";
 import { atom, useAtomValue } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
 
@@ -13,6 +14,7 @@ export const LyricLineMenu = ({
 	const selectedLinesSize = useAtomValue(selectedLinesSizeAtom);
 	const selectedLines = useAtomValue(selectedLinesAtom);
 	const editLyricLines = useSetImmerAtom(lyricLinesAtom);
+	const { t } = useTranslation();
 
 	return (
 		<>
@@ -29,7 +31,7 @@ export const LyricLineMenu = ({
 					});
 				}}
 			>
-				删除所选歌词行
+				{t("lyricLineMenu.deleteSelectedLines", "删除所选歌词行")}
 			</ContextMenu.Item>
 		</>
 	);

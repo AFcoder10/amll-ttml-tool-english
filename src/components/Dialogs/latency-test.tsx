@@ -10,6 +10,7 @@ import { useKeyBindingAtom } from "$/utils/keybindings";
 import { Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
 import { useAtom, useAtomValue } from "jotai";
 import { memo, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const BeepVisualizer = ({
 	enable,
@@ -30,6 +31,7 @@ const BeepVisualizer = ({
 };
 
 export const LatencyTestDialog = memo(() => {
+	const { t } = useTranslation();
 	const [dialogOpen, setDialogOpen] = useAtom(latencyTestDialogAtom);
 	const [latencyBPM, setLatencyBPM] = useAtom(latencyTestBPMAtom);
 	const [start, setStart] = useState(false);
@@ -203,11 +205,18 @@ export const LatencyTestDialog = memo(() => {
 	return (
 		<Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
 			<Dialog.Content>
-				<Dialog.Title>打轴延迟测试</Dialog.Title>
+				<Dialog.Title>
+					{t(
+						"settings.common.latencyTestDialog.title" as const,
+						"打轴延迟测试",
+					)}
+				</Dialog.Title>
 				<Flex direction="column" gap="2">
 					<Text>
-						请选择自己喜欢的
-						BPM，并在每个蜂鸣声响起时按下打轴按键，以测量音频/输入延迟差
+						{t(
+							"settings.common.latencyTestDialog.description" as const,
+							"请选择自己喜欢的 BPM，并在每个蜂鸣声响起时按下打轴按键，以测量音频/输入延迟差",
+						)}
 					</Text>
 
 					<Flex
@@ -228,11 +237,13 @@ export const LatencyTestDialog = memo(() => {
 							alignSelf: "center",
 						}}
 					>
-						<Text>
-							{hitOffset === null ? "最快延迟" : `${hitOffset.max}ms`}
-						</Text>
+							<Text>
+								{hitOffset === null
+									? t("settings.common.latencyTestDialog.fastest")
+									: `${hitOffset.max}ms`}
+							</Text>
 
-						<Text
+							<Text
 							color={
 								hitOffset === null
 									? "gray"
@@ -243,18 +254,20 @@ export const LatencyTestDialog = memo(() => {
 											: "green"
 							}
 						>
-							{hitOffset === null
-								? "未测量"
-								: hitOffset.cur > 0
-									? `快 ${hitOffset.cur}ms`
-									: hitOffset.cur < 0
-										? `慢 ${hitOffset.cur}ms`
-										: "完美 0ms"}
+								{hitOffset === null
+									? t("settings.common.latencyTestDialog.notMeasured")
+									: hitOffset.cur > 0
+										? t("settings.common.latencyTestDialog.fast", { ms: hitOffset.cur })
+										: hitOffset.cur < 0
+											? t("settings.common.latencyTestDialog.slow", { ms: hitOffset.cur })
+											: t("settings.common.latencyTestDialog.perfect")}
 						</Text>
 
-						<Text>
-							{hitOffset === null ? "最慢延迟" : `${-hitOffset.min}ms`}
-						</Text>
+							<Text>
+								{hitOffset === null
+									? t("settings.common.latencyTestDialog.slowest")
+									: `${-hitOffset.min}ms`}
+							</Text>
 					</Flex>
 
 					<canvas
@@ -271,7 +284,7 @@ export const LatencyTestDialog = memo(() => {
 
 					<Text as="label" size="2">
 						<Flex direction="column" gap="2">
-							节拍 BPM
+							{t("settings.common.latencyTestDialog.bpm")}
 							<TextField.Root
 								type="number"
 								min={60}
@@ -284,7 +297,9 @@ export const LatencyTestDialog = memo(() => {
 
 					<Flex gap="2">
 						<Button onClick={() => setStart((v) => !v)}>
-							{start ? "结束" : "开始"}
+							{start
+								? t("settings.common.latencyTestDialog.stop")
+								: t("settings.common.latencyTestDialog.start")}
 						</Button>
 					</Flex>
 				</Flex>

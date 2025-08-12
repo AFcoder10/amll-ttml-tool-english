@@ -113,12 +113,12 @@ export const MetadataEditor = () => {
 			onOpenChange={setMetadataEditorDialog}
 		>
 			<Dialog.Content>
-				<Dialog.Title>元数据编辑器</Dialog.Title>
+				<Dialog.Title>{t("metadataDialog.title", "元数据编辑器")}</Dialog.Title>
 				<table className={styles.metadataTable}>
 					<thead>
 						<tr>
-							<th style={{ width: "1%" }}>元数据类型</th>
-							<th>值</th>
+							<th style={{ width: "1%" }}>{t("metadataDialog.tableHead.key", "元数据类型")}</th>
+							<th>{t("metadataDialog.tableHead.values", "值")}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -132,7 +132,7 @@ export const MetadataEditor = () => {
 									colSpan={2}
 									style={{ color: "var(--gray-9)", textAlign: "center" }}
 								>
-									无任何元数据
+									{t("metadataDialog.empty", "无任何元数据")}
 								</td>
 							</tr>
 						)}
@@ -182,7 +182,7 @@ export const MetadataEditor = () => {
 												});
 											}}
 										>
-											添加
+											{t("metadataDialog.addValue", "添加")}
 										</Button>
 									</td>
 								</tr>
@@ -204,7 +204,7 @@ export const MetadataEditor = () => {
 							}}
 						>
 							<Button variant="soft">
-								添加新键值
+								{t("metadataDialog.addNew", "添加新键值")}
 								<DropdownMenu.TriggerIcon />
 							</Button>
 						</DropdownMenu.Trigger>
@@ -214,7 +214,7 @@ export const MetadataEditor = () => {
 									style={{
 										flexGrow: "1",
 									}}
-									placeholder="自定义键名"
+									placeholder={t("metadataDialog.valuePlaceholder", "自定义键名")}
 									value={customKey}
 									onChange={(e) => setCustomKey(e.currentTarget.value)}
 								/>
@@ -264,7 +264,7 @@ export const MetadataEditor = () => {
 							))}
 						</DropdownMenu.Content>
 					</DropdownMenu.Root>
-					<Button
+						<Button
 						style={{
 							flex: "1 0 auto",
 						}}
@@ -285,7 +285,7 @@ export const MetadataEditor = () => {
 							});
 						}}
 					>
-						一键添加所有预设键
+							{t("metadataDialog.addAllBatch", "一键添加所有预设键")}
 					</Button>
 					<Button asChild variant="soft">
 						<a
@@ -294,7 +294,7 @@ export const MetadataEditor = () => {
 							href="https://github.com/Steve-xmh/amll-ttml-tool/wiki/%E6%AD%8C%E8%AF%8D%E5%85%83%E6%95%B0%E6%8D%AE"
 						>
 							<Info16Regular />
-							了解详情
+							{t("metadataDialog.learnMore", "了解详情")}
 						</a>
 					</Button>
 				</Flex>

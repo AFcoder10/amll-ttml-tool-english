@@ -44,7 +44,6 @@ import { splitAtom } from "jotai/utils";
 import {
 	type FC,
 	Fragment,
-	type RefObject,
 	type SyntheticEvent,
 	memo,
 	useCallback,
@@ -173,6 +172,7 @@ export const LyricLineView: FC<{
 	lineAtom: Atom<LyricLine>;
 	lineIndex: number;
 }> = memo(({ lineAtom, lineIndex }) => {
+	const { t } = useTranslation();
 	const line = useAtomValue(lineAtom);
 	const setSelectedLines = useSetImmerAtom(selectedLinesAtom);
 	const lineSelectedAtom = useMemo(() => {
@@ -272,7 +272,7 @@ export const LyricLineView: FC<{
 						setEnableInsert(false);
 					}}
 				>
-					在此插入新行
+					{t("lyricLineView.insertNewLineBefore", "在此插入新行")}
 				</Button>
 			)}
 			<ContextMenu.Root
@@ -503,7 +503,7 @@ export const LyricLineView: FC<{
 									)}
 									{toolMode === ToolMode.Edit && (
 										<TextField.Root
-											placeholder="插入单词…"
+											placeholder={t("lyricLineView.insertWordPlaceholder", "插入单词…")}
 											className={classNames(
 												styles.insertWordField,
 												words.length === 0 && styles.empty,
@@ -591,7 +591,7 @@ export const LyricLineView: FC<{
 						setEnableInsert(false);
 					}}
 				>
-					在此插入新行
+					{t("lyricLineView.insertNewLineBefore", "在此插入新行")}
 				</Button>
 			)}
 		</>

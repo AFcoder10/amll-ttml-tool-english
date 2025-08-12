@@ -21,6 +21,12 @@
 	},
 	"topBar": {
 		"menu": {
+			"language": "语言",
+			"languageEnglish": "英语",
+			"languageChinese": "简体中文",
+			"languageToggleTooltip": "切换语言",
+			"languageShortEn": "英",
+			"languageShortZh": "中",
 			"file": "文件",
 			"newLyric": "新建歌词",
 			"openLyric": "打开歌词",
@@ -200,6 +206,14 @@
 		"splitingWords": "正在进行分词操作 ({0}/{1})",
 		"finishing": "正在完成"
 	},
+		"audio": {
+			"loadMusicBtn": "加载音乐",
+			"volume": "音量",
+			"playbackRate": "播放速度",
+			"loadMusicHint": "加载音乐文件",
+			"loadMusicHoverHint": "点击图标按钮以加载音乐",
+			"pausePlayHint": "暂停 / 播放音乐"
+		},
 	"splitWordModal": {
 		"title": "拆分单词",
 		"originalWord": "原始单词",
