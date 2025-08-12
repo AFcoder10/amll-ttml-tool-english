@@ -16,6 +16,7 @@
  */
 
 import { log } from "./logging.ts";
+import i18n from "$/i18n";
 import { msToTimestamp as origMsToTimestamp } from "./timestamp";
 import type { LyricLine, LyricWord, TTMLLyric } from "./ttml-types";
 
@@ -65,12 +66,46 @@ export default function exportTTMLText(
 		"http://music.apple.com/lyric-ttml-internal",
 	);
 
-	// Language & timing attributes (Word timing if dynamic lyric, else Line)
-	const isDynamicLyricPrecheck = lyric.some(
-		(line) => line.words.filter((v) => v.word.trim().length > 0).length > 1,
+	// Derive timing & language attributes
+	// 1. itunes:timing: Word | Line | None
+	//    Word  -> at least one line has 2+ non-blank words (dynamic / per-word timing)
+	//    Line  -> has lyric lines & words, but every line has 0 or 1 non-blank word w/ timing
+	//    None  -> no timed words at all (empty lyric or no non-blank words with timing data)
+	const nonBlankWordCountsPerLine = lyric.map((l) =>
+		l.words.filter((w) => w.word.trim().length > 0).length,
 	);
-	ttRoot.setAttribute("itunes:timing", isDynamicLyricPrecheck ? "Word" : "Line");
-	ttRoot.setAttribute("xml:lang", "en");
+	const totalNonBlankWords = nonBlankWordCountsPerLine.reduce(
+		(sum, v) => sum + v,
+		0,
+	);
+	const hasAnyTiming = lyric.some((l) =>
+		l.words.some((w) => w.word.trim().length > 0 && w.endTime > w.startTime),
+	);
+	let timingMode: "Word" | "Line" | "None";
+	if (totalNonBlankWords === 0 || !hasAnyTiming) timingMode = "None";
+	else if (nonBlankWordCountsPerLine.some((c) => c > 1)) timingMode = "Word";
+	else timingMode = "Line";
+	ttRoot.setAttribute("itunes:timing", timingMode);
+
+	// 2. xml:lang: prefer metadata key "language" (first value) else current app language -> ISO 639-1
+	const languageMeta = ttmlLyric.metadata.find((m) => m.key === "language");
+	const rawLangCandidate = languageMeta?.value.find((v) => v.trim().length > 0) || i18n.language || "en";
+	function toISO639_1(lang: string): string {
+		const lower = lang.toLowerCase();
+		if (lower.startsWith("zh")) return "zh"; // Covers zh-CN, zh-TW etc.
+		if (lower.startsWith("en")) return "en";
+		if (lower.startsWith("ja")) return "ja";
+		if (lower.startsWith("ko")) return "ko";
+		if (lower.startsWith("fr")) return "fr";
+		if (lower.startsWith("de")) return "de";
+		if (lower.startsWith("es")) return "es";
+		if (lower.startsWith("pt")) return "pt";
+		if (lower.startsWith("ru")) return "ru";
+		// fallback: first 2 letters (basic heuristic)
+		return lower.slice(0, 2) || "en";
+	}
+	const isoLang = toISO639_1(rawLangCandidate);
+	ttRoot.setAttribute("xml:lang", isoLang);
 
 	doc.appendChild(ttRoot);
 
@@ -138,7 +173,7 @@ export default function exportTTMLText(
 
 	const guessDuration = lyric[lyric.length - 1]?.endTime ?? 0;
 	body.setAttribute("dur", msToTimestamp(guessDuration));
-	const isDynamicLyric = isDynamicLyricPrecheck;
+	const isDynamicLyric = timingMode === "Word";
 
 	for (const param of params) {
 		const paramDiv = doc.createElement("div");
