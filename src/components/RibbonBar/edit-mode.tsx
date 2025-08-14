@@ -444,7 +444,7 @@ export const EditModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 						/>
 					</Grid>
 				</RibbonSection>
-				<RibbonSection label={t("ribbonBar.editMode.timing", "词时间戳")}>
+				<RibbonSection label={t("ribbonBar.editMode.wordTiming", "词时间戳")}>
 					<Grid columns="0fr 1fr" gap="2" gapY="1" flexGrow="1" align="center">
 						<EditField
 							label={t("ribbonBar.editMode.startTime", "起始时间")}
