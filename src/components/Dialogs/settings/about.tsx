@@ -19,7 +19,7 @@ export const SettingsAboutTab = () => {
 					commit: GIT_COMMIT === "unknown" ? t("aboutModal.unknown", "unknown") : (
 						<Button asChild variant="ghost">
 							<a
-								href={`https://github.com/Steve-xmh/amll-ttml-tool/commit/${GIT_COMMIT}`}
+								href={`https://github.com/streetlegithub/amll-ttml-tool-english/commit/${GIT_COMMIT}`}
 								target="_blank"
 								rel="noreferrer"
 							>

@@ -296,7 +296,7 @@ export const MetadataEditor = () => {
 						<a
 							target="_blank"
 							rel="noreferrer"
-							href="https://github.com/Steve-xmh/amll-ttml-tool/wiki/%E6%AD%8C%E8%AF%8D%E5%85%83%E6%95%B0%E6%8D%AE"
+							href="https://github.com/streetlegithub/amll-ttml-tool-english/wiki/%E6%AD%8C%E8%AF%8D%E5%85%83%E6%95%B0%E6%8D%AE"
 						>
 							<Info16Regular />
 							{t("metadataDialog.learnMore", "了解详情")}

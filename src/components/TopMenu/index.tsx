@@ -211,18 +211,20 @@ export const TopMenu: FC = () => {
 	}, [store]);
 
 	const onOpenGitHub = useCallback(async () => {
+		const url = "https://github.com/streetlegithub/amll-ttml-tool-english";
 		if (import.meta.env.TAURI_ENV_PLATFORM) {
-			await open("https://github.com/Steve-xmh/amll-ttml-tool");
+			await open(url);
 		} else {
-			window.open("https://github.com/Steve-xmh/amll-ttml-tool");
+			window.open(url);
 		}
 	}, []);
 
 	const onOpenWiki = useCallback(async () => {
+		const url = "https://github.com/streetlegithub/amll-ttml-tool-english/wiki";
 		if (import.meta.env.TAURI_ENV_PLATFORM) {
-			await open("https://github.com/Steve-xmh/amll-ttml-tool/wiki");
+			await open(url);
 		} else {
-			window.open("https://github.com/Steve-xmh/amll-ttml-tool/wiki");
+			window.open(url);
 		}
 	}, []);
 
