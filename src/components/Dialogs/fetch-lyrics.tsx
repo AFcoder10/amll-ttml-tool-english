@@ -1,15 +1,14 @@
-import { fetchLyricsDialogAtom, fetchLyricsProviderAtom } from "$/states/dialogs.ts";
+import { fetchLyricsDialogAtom } from "$/states/dialogs.ts";
 import { lyricLinesAtom } from "$/states/main.ts";
-import { Button, Dialog, Flex, RadioGroup, Text, TextField } from "@radix-ui/themes";
+import { Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
 import { useAtom, useStore } from "jotai";
 import { useTranslation } from "react-i18next";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { newLyricLine, newLyricWord, type LyricLine } from "$/utils/ttml-types.ts";
 import { toast } from "react-toastify";
 
 export const FetchLyricsDialog = () => {
   const [open, setOpen] = useAtom(fetchLyricsDialogAtom);
-  const [provider, setProvider] = useAtom(fetchLyricsProviderAtom);
   const { t } = useTranslation();
   const store = useStore();
 
@@ -32,14 +31,7 @@ export const FetchLyricsDialog = () => {
   const [mode, setMode] = useState<"search" | "preview">("search");
   const [previewText, setPreviewText] = useState("");
 
-  const canSearch = useMemo(() => provider === "lrclib" && title.trim().length > 0, [provider, title]);
-
-  // Ensure only LRCLIB is active when opening the dialog in this fork
-  useEffect(() => {
-    if (open && provider !== "lrclib") {
-      setProvider("lrclib");
-    }
-  }, [open, provider, setProvider]);
+  const canSearch = useMemo(() => title.trim().length > 0, [title]);
 
   const doSearch = useCallback(async () => {
     if (!canSearch) return;
@@ -130,23 +122,14 @@ export const FetchLyricsDialog = () => {
           <Flex direction="column" gap="3">
             <Flex align="center">
               <Dialog.Title style={{ flex: "1 1 auto" }}>
-                {t("fetchLyrics.title", "Fetch Lyrics")}
+                {t("fetchLyrics.title", "Fetch lyrics from LRCLIB")}
               </Dialog.Title>
               <Button disabled={!canSearch || loading} onClick={doSearch}>
                 {loading ? t("fetchLyrics.searching", "Searching...") : t("fetchLyrics.fetchBtn", "Fetch")}
               </Button>
             </Flex>
 
-            <Flex direction="column" gap="2">
-              <Text color="gray" size="2">{t("fetchLyrics.provider", "Provider")}</Text>
-        <RadioGroup.Root value={provider} onValueChange={(v) => setProvider(v as "musixmatch" | "genius" | "lrclib") }>
-                <Flex gap="3" wrap="wrap">
-          <Flex align="center" gap="2"><RadioGroup.Item value="musixmatch" disabled /><Text color="gray">Musixmatch</Text></Flex>
-          <Flex align="center" gap="2"><RadioGroup.Item value="genius" disabled /><Text color="gray">Genius</Text></Flex>
-                  <Flex align="center" gap="2"><RadioGroup.Item value="lrclib" /><Text>LRCLIB</Text></Flex>
-                </Flex>
-              </RadioGroup.Root>
-            </Flex>
+            {/* Provider selection removed: LRCLIB-only */}
 
             <Flex direction="column" gap="2">
               <Text color="gray" size="2">{t("fetchLyrics.fields.title", "Song Title")}</Text>

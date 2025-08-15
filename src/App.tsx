@@ -279,12 +279,12 @@ function App() {
 			accentColor={isDarkTheme ? "jade" : "green"}
 			className={styles.radixTheme}
 		>
-			<ErrorBoundary
-				FallbackComponent={AppErrorPage}
-				onReset={(details) => {
-					// TODO
-				}}
-			>
+				<ErrorBoundary
+					FallbackComponent={AppErrorPage}
+					onReset={() => {
+						// TODO
+					}}
+				>
 				{toolMode === ToolMode.Sync && <SyncKeyBinding />}
 				<DarkThemeDetector />
 				<Flex direction="column" height="100vh">

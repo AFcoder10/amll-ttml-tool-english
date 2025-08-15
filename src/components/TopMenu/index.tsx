@@ -29,7 +29,7 @@ import {
 	undoableLyricLinesAtom,
 } from "$/states/main.ts";
 import { formatKeyBindings, useKeyBindingAtom } from "$/utils/keybindings.ts";
-import { fetchLyricsDialogAtom, fetchLyricsProviderAtom } from "$/states/dialogs.ts";
+import { fetchLyricsDialogAtom } from "$/states/dialogs.ts";
 import { error, log } from "$/utils/logging.ts";
 import { parseLyric } from "$/utils/ttml-parser.ts";
 import { type LyricWord, newLyricWord } from "$/utils/ttml-types";
@@ -209,14 +209,9 @@ export const TopMenu: FC = () => {
 	}, [store]);
 
 	const setFetchLyricsOpen = useSetAtom(fetchLyricsDialogAtom);
-	const setFetchProvider = useSetAtom(fetchLyricsProviderAtom);
-	const openFetchWith = useCallback(
-		(provider: "musixmatch" | "genius" | "lrclib") => {
-			setFetchProvider(provider);
-			setFetchLyricsOpen(true);
-		},
-		[setFetchLyricsOpen, setFetchProvider],
-	);
+	const openFetch = useCallback(() => {
+		setFetchLyricsOpen(true);
+	}, [setFetchLyricsOpen]);
 
 	const onOpenGitHub = useCallback(async () => {
 		const url = "https://github.com/streetlegithub/amll-ttml-tool-english";
@@ -523,16 +518,9 @@ export const TopMenu: FC = () => {
 								<DropdownMenu.Separator />
 								<ImportExportLyric />
 								<DropdownMenu.Separator />
-								<DropdownMenu.Sub>
-									<DropdownMenu.SubTrigger>
-										<Trans i18nKey="topBar.menu.fetchLyrics">Fetch Lyrics...</Trans>
-									</DropdownMenu.SubTrigger>
-									<DropdownMenu.SubContent>
-										<DropdownMenu.Item disabled>Musixmatch</DropdownMenu.Item>
-										<DropdownMenu.Item disabled>Genius</DropdownMenu.Item>
-										<DropdownMenu.Item onSelect={() => openFetchWith("lrclib")}>LRCLIB</DropdownMenu.Item>
-									</DropdownMenu.SubContent>
-								</DropdownMenu.Sub>
+								<DropdownMenu.Item onSelect={openFetch}>
+									<Trans i18nKey="topBar.menu.fetchLyrics">Fetch lyrics from LRCLIB</Trans>
+								</DropdownMenu.Item>
 								<DropdownMenu.Separator />
 								<DropdownMenu.Item disabled>
 									<Trans i18nKey="topBar.menu.uploadToAMLLDB">Upload to AMLL Lyrics Database</Trans>
@@ -691,16 +679,9 @@ export const TopMenu: FC = () => {
 							<DropdownMenu.Separator />
 							<ImportExportLyric />
 							<DropdownMenu.Separator />
-							<DropdownMenu.Sub>
-								<DropdownMenu.SubTrigger>
-									<Trans i18nKey="topBar.menu.fetchLyrics">Fetch Lyrics...</Trans>
-								</DropdownMenu.SubTrigger>
-								<DropdownMenu.SubContent>
-									<DropdownMenu.Item disabled>Musixmatch</DropdownMenu.Item>
-									<DropdownMenu.Item disabled>Genius</DropdownMenu.Item>
-									<DropdownMenu.Item onSelect={() => openFetchWith("lrclib")}>LRCLIB</DropdownMenu.Item>
-								</DropdownMenu.SubContent>
-							</DropdownMenu.Sub>
+							<DropdownMenu.Item onSelect={openFetch}>
+								<Trans i18nKey="topBar.menu.fetchLyrics">Fetch lyrics from LRCLIB</Trans>
+							</DropdownMenu.Item>
 							<DropdownMenu.Separator />
 							<DropdownMenu.Item disabled>
 								<Trans i18nKey="topBar.menu.uploadToAMLLDB">Upload to AMLL Lyrics Database</Trans>

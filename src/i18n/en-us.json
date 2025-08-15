@@ -64,7 +64,7 @@
 				"completed": "Segmentation completed!",
 				"failed": "Segmentation failed, please check console output!"
 			},
-			"fetchLyrics": "Fetch Lyrics..."
+			"fetchLyrics": "Fetch lyrics from LRCLIB"
 		},
 		"fileNamePlaceholder": "File name",
 		"modeBtns": {
@@ -569,7 +569,7 @@
 		}
 	},
 	"fetchLyrics": {
-		"title": "Fetch Lyrics",
+		"title": "Fetch lyrics from LRCLIB",
 		"provider": "Provider",
 		"providers": {
 			"musixmatch": "Musixmatch",

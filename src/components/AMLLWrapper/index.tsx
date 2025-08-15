@@ -44,7 +44,8 @@ export const AMLLWrapper = memo(() => {
 
 	useEffect(() => {
 		setTimeout(() => {
-			playerRef.current?.lyricPlayer?.calcLayout(true, true);
+			// Force a layout recalculation after initial mount
+			playerRef.current?.lyricPlayer?.calcLayout(true);
 		}, 1500);
 	}, []);
 

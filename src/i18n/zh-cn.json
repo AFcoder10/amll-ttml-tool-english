@@ -69,7 +69,7 @@
 			"tool": "工具",
 			"restoreFromHistory": "从历史记录恢复..."
 		},
-		"fetchLyrics": "获取歌词...",
+		"fetchLyrics": "从 LRCLIB 获取歌词",
 		"modeBtns": {
 			"edit": "编辑",
 			"sync": "打轴",
@@ -263,7 +263,7 @@
 		"emptyBeatMark": "空拍符号"
 	},
 	"fetchLyrics": {
-		"title": "获取歌词",
+		"title": "从 LRCLIB 获取歌词",
 		"provider": "来源",
 		"providers": {
 			"musixmatch": "Musixmatch",

@@ -40,6 +40,7 @@
 		"jotai-immer": "^0.4.1",
 		"jotai-optics": "^0.4.0",
 		"monaco-editor": "^0.52.2",
+		"musixmatch-richsync": "^1.0.1",
 		"optics-ts": "^2.4.1",
 		"radix-ui": "^1.4.2",
 		"react": "^19.0.0",
