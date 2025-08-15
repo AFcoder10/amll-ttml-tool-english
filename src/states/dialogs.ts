@@ -6,6 +6,10 @@ export const settingsDialogAtom = atom(false);
 export const latencyTestDialogAtom = atom(false);
 export const submitToAMLLDBDialogAtom = atom(false);
 export const splitWordDialogAtom = atom(false);
+export const fetchLyricsDialogAtom = atom(false);
+export const fetchLyricsProviderAtom = atom<"musixmatch" | "genius" | "lrclib">(
+	"lrclib",
+);
 
 export const confirmDialogAtom = atom<{
 	open: boolean;

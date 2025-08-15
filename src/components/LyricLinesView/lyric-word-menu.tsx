@@ -8,6 +8,7 @@ import {
 import { newLyricWord } from "$/utils/ttml-types";
 import type { LyricWord } from "@applemusic-like-lyrics/lyric";
 import { ContextMenu } from "@radix-ui/themes";
+import { Trans } from "react-i18next";
 import { type Atom, atom, useAtomValue, useSetAtom, useStore } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
 
@@ -44,7 +45,7 @@ export const LyricWordMenu = ({
 					});
 				}}
 			>
-				删除所选单词
+				<Trans i18nKey="contextMenu.deleteWord">Delete Selected Word</Trans>
 			</ContextMenu.Item>
 			<ContextMenu.Item
 				disabled={selectedWordsSize !== 1}
@@ -57,7 +58,7 @@ export const LyricWordMenu = ({
 					setOpenSplitWordDialog(true);
 				}}
 			>
-				拆分此单词/在此处替换单词
+				<Trans i18nKey="contextMenu.splitWordHere">Split this word / Replace here</Trans>
 			</ContextMenu.Item>
 			<ContextMenu.Item
 				disabled={!(selectedWordsSize > 1 && selectedLinesSize === 1)}
@@ -99,7 +100,7 @@ export const LyricWordMenu = ({
 					});
 				}}
 			>
-				合并单词
+				<Trans i18nKey="contextMenu.concatWords">Merge Words</Trans>
 			</ContextMenu.Item>
 		</>
 	);

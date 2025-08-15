@@ -96,25 +96,40 @@ export function parseLyric(ttmlText: string): TTMLLyric {
 	let mainAgentId = "v1";
 
 	const metadata: TTMLMetadata[] = [];
+
+	// Helper to add metadata values with de-duplication
+	function addMetadata(key: string, value: string) {
+		const trimmed = (value ?? "").trim();
+		if (!trimmed) return;
+		const existing = metadata.find((m) => m.key === key);
+		if (existing) {
+			if (!existing.value.includes(trimmed)) existing.value.push(trimmed);
+		} else {
+			metadata.push({ key, value: [trimmed] });
+		}
+	}
 	for (const meta of ttmlDoc.querySelectorAll("meta")) {
 		if (meta.tagName === "amll:meta") {
 			const key = meta.getAttribute("key");
 			if (key) {
 				const value = meta.getAttribute("value");
-				if (value) {
-					const existing = metadata.find((m) => m.key === key);
-					if (existing) {
-						existing.value.push(value);
-					} else {
-						metadata.push({
-							key,
-							value: [value],
-						});
-					}
-				}
+				if (value) addMetadata(key, value);
 			}
 		}
 	}
+
+	// Import iTunesMetadata songwriters into our metadata model
+	for (const sw of ttmlDoc.querySelectorAll(
+		"iTunesMetadata > songwriters > songwriter",
+	)) {
+		const name = sw.textContent ?? "";
+		addMetadata("songwriter", name);
+	}
+
+	// Capture xml:lang on <tt> into metadata.language for round-tripping
+	const ttRoot = ttmlDoc.querySelector("tt");
+	const xmlLang = ttRoot?.getAttribute("xml:lang");
+	if (xmlLang) addMetadata("language", xmlLang);
 
 	for (const agent of ttmlDoc.querySelectorAll("ttm\\:agent")) {
 		if (agent.getAttribute("type") === "person") {

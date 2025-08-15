@@ -302,6 +302,8 @@ export const ImportFromText = () => {
 							{t("importFromText.importBtn", "导入歌词")}
 						</Button>
 					</Flex>
+
+
 					<Flex
 						gap="4"
 						direction={{
@@ -419,6 +421,22 @@ export const ImportFromText = () => {
 								onChange={(evt) => setEmptyBeatSymbol(evt.currentTarget.value)}
 							/>
 						</Grid>
+					</Flex>
+					{/* Bottom-right actions */}
+					<Flex mt="3" justify="end">
+						<Button
+							variant="soft"
+							onClick={() => {
+								const current = store.get(textValueAtom);
+								const PLACEHOLDER = "__AMLL_ESC_SPACE__";
+								const preserved = current.replace(/\\ \\/g, PLACEHOLDER);
+								const replaced = preserved.replace(/ /g, "\\ \\");
+								const restored = replaced.replace(new RegExp(PLACEHOLDER, "g"), "\\ \\");
+								store.set(textValueAtom, restored);
+							}}
+						>
+							{t("importFromText.addSpacesBtn", "添加空格分隔符")}
+						</Button>
 					</Flex>
 				</Flex>
 			</Dialog.Content>

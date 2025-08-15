@@ -69,6 +69,7 @@
 			"tool": "工具",
 			"restoreFromHistory": "从历史记录恢复..."
 		},
+		"fetchLyrics": "获取歌词...",
 		"modeBtns": {
 			"edit": "编辑",
 			"sync": "打轴",
@@ -161,6 +162,7 @@
 		"toggleDuetLine": "切换对唱人声歌词",
 		"deleteWord": "删除选定单词",
 		"splitWord": "切割当前单词",
+		"splitWordHere": "拆分此单词/在此处替换单词",
 		"concatWords": "拼接单词",
 		"wipNotification": {
 			"title": "功能暂未实现",
@@ -259,6 +261,35 @@
 		"duetLinePrefix": "对唱歌词前缀",
 		"emptyBeat": "启用空拍",
 		"emptyBeatMark": "空拍符号"
+	},
+	"fetchLyrics": {
+		"title": "获取歌词",
+		"provider": "来源",
+		"providers": {
+			"musixmatch": "Musixmatch",
+			"genius": "Genius",
+			"lrclib": "LRCLIB"
+		},
+		"fields": {
+			"title": "歌曲名",
+			"artist": "歌手",
+			"language": "语言（可选）"
+		},
+		"placeholders": {
+			"title": "输入歌曲名",
+			"artist": "输入歌手名",
+			"language": "例如 en, zh"
+		},
+		"results": "结果",
+		"resultsPlaceholder": "服务结果会显示在这里。后续再接入。",
+		"fetchBtn": "获取",
+		"searching": "搜索中...",
+		"noResults": "没有结果",
+		"searchFailed": "搜索失败：{{msg}}",
+		"import": "导入",
+		"noContent": "该结果没有可用的歌词内容",
+		"imported": "已从 LRCLIB 导入歌词",
+		"importFailed": "导入歌词失败"
 	},
 	"uploadDBDialog": {
 		"title": "提交歌词到 AMLL 歌词数据库（仅简体中文用户）",

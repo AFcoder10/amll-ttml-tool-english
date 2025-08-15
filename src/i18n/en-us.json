@@ -63,7 +63,8 @@
 				"processing": "Segmenting lyrics, please wait...",
 				"completed": "Segmentation completed!",
 				"failed": "Segmentation failed, please check console output!"
-			}
+			},
+			"fetchLyrics": "Fetch Lyrics..."
 		},
 		"fileNamePlaceholder": "File name",
 		"modeBtns": {
@@ -88,8 +89,10 @@
 		"insertAfterLine": "New line after selection",
 		"toggleBGLine": "Toggle Background Vocal for the line",
 		"toggleDuetLine": "Toggle Duet Vocal for the line",
-		"deleteWord": "Delete this word",
+		"deleteWord": "Delete Selected Word",
 		"splitWord": "Split this word",
+		"splitWordHere": "Split this word / Replace here",
+		"concatWords": "Merge Words",
 		"wipNotification": {
 			"title": "Function currently not available",
 			"content": "Give us some time and we'll give you back a new sky~"
@@ -542,6 +545,7 @@
 	"importFromText": {
 		"title": "Import Plain Text Lyrics",
 		"failed": "Failed to import plain text lyrics. Please verify the input text and import settings.",
+		"addSpacesBtn": "Add Spaces",
 		"importBtn": "Import Lyrics",
 		"importMode": "Import Mode",
 		"lyricSplitMode": "Lyric Split (Translation & Romanization) Mode",
@@ -563,6 +567,35 @@
 			"interleaved": "Multi-line Interleaved",
 			"sameLine": "Same-line Separator"
 		}
+	},
+	"fetchLyrics": {
+		"title": "Fetch Lyrics",
+		"provider": "Provider",
+		"providers": {
+			"musixmatch": "Musixmatch",
+			"genius": "Genius",
+			"lrclib": "LRCLIB"
+		},
+		"fields": {
+			"title": "Song Title",
+			"artist": "Artist",
+			"language": "Language (optional)"
+		},
+		"placeholders": {
+			"title": "Enter song title",
+			"artist": "Enter artist name",
+			"language": "e.g. en, zh"
+		},
+		"results": "Results",
+		"resultsPlaceholder": "Results from provider will appear here.  ",
+		"fetchBtn": "Fetch",
+		"searching": "Searching...",
+		"noResults": "No results",
+		"searchFailed": "Search failed: {{msg}}",
+		"import": "Import",
+		"noContent": "No lyrics content found in this result.",
+		"imported": "Lyrics imported from LRCLIB",
+		"importFailed": "Failed to import lyrics"
 	},
 	"confirmation": {
 		"cancel": "Cancel",

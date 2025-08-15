@@ -7,6 +7,7 @@ import { HistoryRestoreDialog } from "./HistoryRestore.tsx";
 import { LatencyTestDialog } from "./latency-test";
 import { NoticeDialog } from "./notice.tsx";
 import { SplitWordDialog } from "./split-word";
+import { FetchLyricsDialog } from "./fetch-lyrics";
 
 export const Dialogs = () => {
 	return (
@@ -16,6 +17,7 @@ export const Dialogs = () => {
 			<SettingsDialog />
 			<SplitWordDialog />
 			<SubmitToAMLLDBDialog />
+			<FetchLyricsDialog />
 			<LatencyTestDialog />
 			<NoticeDialog />
 			<ConfirmationDialog />
